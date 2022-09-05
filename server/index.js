@@ -14,7 +14,11 @@ app.use(express.json());
 const DB = "mongodb+srv://admin:admin@cluster0.q0okive.mongodb.net/?retryWrites=true&w=majority";
 
 io.on('connection', (socket) => {
-    console.log('Socket Client connected.');
+    console.log('Client connected.');
+    
+    socket.on('createRoom', ({ nickname }) => {
+        console.log(nickname);
+    });
 });
 
 mongoose.connect(DB).then(() => {
