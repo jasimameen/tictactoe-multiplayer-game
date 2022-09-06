@@ -25,7 +25,7 @@ class _JoinRoomScreenState extends State<JoinRoomScreen> {
     super.initState();
     _socketMethods.joinRoomSuccessListener();
     _socketMethods.errorOccuredListener();
-    _socketMethods.updatePlayerListener();
+    _socketMethods.updatePlayersStateListener();
   }
 
   @override

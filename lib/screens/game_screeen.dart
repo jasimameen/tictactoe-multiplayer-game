@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mp_tictactoe/resources/socket_methods.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/room_data_providre.dart';
@@ -13,6 +14,15 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  final SocketMethods _socketMethods = SocketMethods();
+
+  @override
+  void initState() {
+    super.initState();
+    _socketMethods.updateRoomListener();
+    _socketMethods.updatePlayersStateListener();
+  }
+
   @override
   Widget build(BuildContext context) {
     RoomDataProvider roomDataProvider = Provider.of<RoomDataProvider>(context);

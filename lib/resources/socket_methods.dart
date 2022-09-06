@@ -52,19 +52,28 @@ class SocketMethods {
     });
   }
 
+  void updateRoomListener() {
+    _socketClient.on('updateRoom', (room) {
+      Provider.of<RoomDataProvider>(
+        Navigation.currentStateContext,
+        listen: false,
+      ).updateRoomData(room);
+    });
+  }
+
   void errorOccuredListener() {
     _socketClient.on('errorOccured', (err) {
       showSnackBar(err);
     });
   }
 
-  void updatePlayerListener() {
+  void updatePlayersStateListener() {
     _socketClient.on('updatePlayers', (playersData) {
       Provider.of<RoomDataProvider>(
         Navigation.currentStateContext,
         listen: false,
       ).updatePlayer1(playersData[0]);
-      
+
       Provider.of<RoomDataProvider>(
         Navigation.currentStateContext,
         listen: false,
