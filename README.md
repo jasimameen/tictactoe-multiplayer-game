@@ -40,6 +40,11 @@ Head to macos/Runner and make sure the following keys are present in DebugProfil
 <true/>
 ```
 
+If macos not Present enable it using
+```bash
+flutter config --enable-macos
+```
+
 Run App
 ```bash
 flutter run // After selecting the device you want to test on
