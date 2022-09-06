@@ -23,13 +23,14 @@ import 'package:flutter/material.dart';
 /// ```
 class Navigation {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  static BuildContext get context => navigatorKey.currentState!.context;
+  /// BuildContext of current active State
+  static BuildContext get currentStateContext => navigatorKey.currentState!.context;
 
   static Future<T?> pushNamed<T extends Object?>(String routeName,
       {Object? arguments}) {
-    return Navigator.pushNamed(context, routeName, arguments: arguments);
+    return Navigator.pushNamed(currentStateContext, routeName, arguments: arguments);
   }
 
   static void pop<T extends Object?>([T? result]) =>
-      Navigator.pop(context, result);
+      Navigator.pop(currentStateContext, result);
 }
