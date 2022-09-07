@@ -17,7 +17,6 @@ const DB = "mongodb+srv://admin:admin@cluster0.q0okive.mongodb.net/?retryWrites=
 io.on('connection', (socket) => {
     console.log('Client connected.');
 
-
     socket.on('createRoom', async ({ nickname }) => {
         console.log('NickName: ', nickname, '\tSocketID: ', socket.id);
 
@@ -71,8 +70,9 @@ io.on('connection', (socket) => {
                 room.isJoin = false;
                 room = await room.save();
                 io.to(roomId).emit('joinRoomSuccess', room);
-                io.to(roomId).emit('updatePlayers', room.players);
-                io.to(roomId).emit('updateRoom', room);
+                io.emit('updatePlayers', room.players);
+                io.emit('updateRoom', room);
+
             } else {
                 socket.emit('errorOccured', 'No slots left for now in this Room. The game is in progress')
             }
@@ -81,6 +81,30 @@ io.on('connection', (socket) => {
             console.log(err);
         }
     });
+
+    socket.on('tap', async ({ index, roomId }) => {
+        try {
+            let room = await Room.findById(roomId);
+            let choice = room.turn.playerType; // X or O
+            if (room.turnIndex == 0) {
+                room.turnIndex = 1;
+                room.turn = room.players[1];
+            } else {
+                room.turnIndex = 0;
+                room.turn = room.players[0];
+            }
+            await room.save();
+            io.emit('tapped', {
+                index,
+                choice,
+                room,
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
 });
 
 mongoose.connect(DB).then(() => {
