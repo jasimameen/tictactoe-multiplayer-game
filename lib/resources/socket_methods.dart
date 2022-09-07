@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mp_tictactoe/core/navigation.dart';
-import 'package:mp_tictactoe/resources/socket_client.dart';
-import 'package:mp_tictactoe/screens/game_screeen.dart';
-import 'package:mp_tictactoe/utils/utils.dart';
+import '../core/navigation.dart';
+import 'socket_client.dart';
+import '../screens/game_screeen.dart';
+import '../utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 

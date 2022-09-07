@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mp_tictactoe/provider/room_data_providre.dart';
-import 'package:mp_tictactoe/resources/socket_methods.dart';
+import '../provider/room_data_providre.dart';
+import '../resources/socket_methods.dart';
 import 'package:provider/provider.dart';
 
 /// Tick-Tac-Toe 3 x 3 Game Board with 'X' and 'O'

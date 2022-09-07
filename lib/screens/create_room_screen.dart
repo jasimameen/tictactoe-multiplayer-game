@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mp_tictactoe/resources/socket_methods.dart';
-import 'package:mp_tictactoe/responsive/responsive.dart';
-import 'package:mp_tictactoe/widgets/custom_button.dart';
-import 'package:mp_tictactoe/widgets/custom_text.dart';
-import 'package:mp_tictactoe/widgets/custom_text_field.dart';
+import '../resources/socket_methods.dart';
+import '../responsive/responsive.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_text.dart';
+import '../widgets/custom_text_field.dart';
 
 class CreateRoomScreen extends StatefulWidget {
   static const String routeName = '/create-room';

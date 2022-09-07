@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mp_tictactoe/resources/socket_methods.dart';
-import 'package:mp_tictactoe/responsive/responsive.dart';
+import '../resources/socket_methods.dart';
+import '../responsive/responsive.dart';
 
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';

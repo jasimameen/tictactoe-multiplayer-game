@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:mp_tictactoe/resources/socket_methods.dart';
-import 'package:mp_tictactoe/views/game_board.dart';
-import 'package:mp_tictactoe/views/score_board.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/room_data_providre.dart';
+import '../resources/socket_methods.dart';
+import '../views/game_board.dart';
+import '../views/score_board.dart';
 import '../views/waiting_lobby.dart';
 
 class GameScreen extends StatefulWidget {

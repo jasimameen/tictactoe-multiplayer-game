@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mp_tictactoe/core/navigation.dart';
+import '../core/navigation.dart';
 
 void showSnackBar(String msg) {
   ScaffoldMessenger.of(Navigation.currentStateContext)

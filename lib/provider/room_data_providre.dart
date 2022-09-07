@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:mp_tictactoe/models/player.dart';
+
+import '../models/player.dart';
 
 class RoomDataProvider extends ChangeNotifier {
   Map<String, dynamic> _roomData = {};
-  List<String> _displayElements = ['', '', '', '', '', '', '', '', ''];
+  final List<String> _displayElements = ['', '', '', '', '', '', '', '', ''];
   int _filledBoxes = 0;
 
   Player _player1 = Player(
