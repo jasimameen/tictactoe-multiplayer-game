@@ -21,6 +21,9 @@ migration:
     - platform: ios
       create_revision: ceb687929c10bacad6224d870f1cf5205226a599
       base_revision: ceb687929c10bacad6224d870f1cf5205226a599
+    - platform: linux
+      create_revision: ceb687929c10bacad6224d870f1cf5205226a599
+      base_revision: ceb687929c10bacad6224d870f1cf5205226a599
     - platform: web
       create_revision: ceb687929c10bacad6224d870f1cf5205226a599
       base_revision: ceb687929c10bacad6224d870f1cf5205226a599
