@@ -1,22 +1,30 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
 import 'package:mp_tictactoe/models/player.dart';
 
 class RoomDataProvider extends ChangeNotifier {
   Map<String, dynamic> _roomData = {};
+  List<String> _displayElements = ['', '', '', '', '', '', '', '', ''];
+  int _filledBoxes = 0;
+
   Player _player1 = Player(
     nickname: '',
     socketID: '',
     points: 0,
-    playerType: '',
+    playerType: 'X',
   );
   Player _player2 = Player(
     nickname: '',
     socketID: '',
     points: 0,
-    playerType: '',
+    playerType: 'O',
   );
 
   Map<String, dynamic> get roomData => _roomData;
+  List<String> get displayElements => _displayElements;
+  int get filledBoxes => _filledBoxes;
+
   Player get player1 => _player1;
   Player get player2 => _player2;
 
@@ -32,6 +40,12 @@ class RoomDataProvider extends ChangeNotifier {
 
   void updatePlayer2(Map<String, dynamic> player2Data) {
     _player2 = Player.fromMap(player2Data);
+    notifyListeners();
+  }
+
+  void updateDisplayElements(int index, String choice) {
+    _displayElements[index] = choice;
+    _filledBoxes++;
     notifyListeners();
   }
 }

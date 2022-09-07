@@ -1,16 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mp_tictactoe/core/navigation.dart';
 import 'package:mp_tictactoe/resources/socket_client.dart';
 import 'package:mp_tictactoe/screens/game_screeen.dart';
 import 'package:mp_tictactoe/utils/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 import '../provider/room_data_providre.dart';
 
 class SocketMethods {
   final _socketClient = SocketClient.instance.socket!;
+
+  Socket get socket => _socketClient;
 
   // Emits
   void createRoom(String nickname) {
@@ -28,13 +29,22 @@ class SocketMethods {
     }
   }
 
+  void tapGrid(int index, String roomId, List<String> displayElements) {
+    if (displayElements[index] == '') {
+      _socketClient.emit('tap', {
+        'index': index,
+        'roomId': roomId,
+      });
+    }
+  }
+
   // Listeners
-  void createRoomSuccessListener() {
+  void createRoomSuccessListener(BuildContext context) {
     _socketClient.on(
       'CreateRoomSuccess',
       (room) {
         Provider.of<RoomDataProvider>(
-          Navigation.currentStateContext,
+          context,
           listen: false,
         ).updateRoomData(room);
         Navigation.pushNamed(GameScreen.routeName);
@@ -42,20 +52,20 @@ class SocketMethods {
     );
   }
 
-  void joinRoomSuccessListener() {
+  void joinRoomSuccessListener(BuildContext context) {
     _socketClient.on('joinRoomSuccess', (room) {
       Provider.of<RoomDataProvider>(
-        Navigation.currentStateContext,
+        context,
         listen: false,
       ).updateRoomData(room);
       Navigation.pushNamed(GameScreen.routeName);
     });
   }
 
-  void updateRoomListener() {
+  void updateRoomListener(BuildContext context) {
     _socketClient.on('updateRoom', (room) {
       Provider.of<RoomDataProvider>(
-        Navigation.currentStateContext,
+        context,
         listen: false,
       ).updateRoomData(room);
     });
@@ -67,17 +77,32 @@ class SocketMethods {
     });
   }
 
-  void updatePlayersStateListener() {
+  void updatePlayersStateListener(BuildContext context) {
     _socketClient.on('updatePlayers', (playersData) {
       Provider.of<RoomDataProvider>(
-        Navigation.currentStateContext,
+        context,
         listen: false,
       ).updatePlayer1(playersData[0]);
 
       Provider.of<RoomDataProvider>(
-        Navigation.currentStateContext,
+        context,
         listen: false,
       ).updatePlayer2(playersData[1]);
     });
   }
+
+  void tappedListener(BuildContext context) {
+    _socketClient.on('tapped', (data) {
+      Provider.of<RoomDataProvider>(
+        context,
+        listen: false,
+      ).updateDisplayElements(data['index'], data['choice']);
+
+      Provider.of<RoomDataProvider>(context, listen: false)
+          .updateRoomData(data['room']);
+    });
+  }
+
+  // dispose socket client
+  void dispose() => _socketClient.dispose();
 }

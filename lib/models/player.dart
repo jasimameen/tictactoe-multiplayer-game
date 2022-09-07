@@ -1,7 +1,7 @@
 class Player {
   final String nickname;
   final String socketID;
-  final num points;
+  final int points;
   final String playerType;
 
   Player({
@@ -24,7 +24,7 @@ class Player {
     return Player(
       nickname: map['nickname'] as String,
       socketID: map['socketID'] as String,
-      points: map['points'] as num,
+      points: map['points'] as int,
       playerType: map['playerType'] as String,
     );
   }
@@ -32,7 +32,7 @@ class Player {
   Player copyWith({
     String? nickname,
     String? socketID,
-    double? points,
+    int? points,
     String? playerType,
   }) {
     return Player(

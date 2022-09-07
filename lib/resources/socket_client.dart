@@ -9,8 +9,10 @@ class SocketClient {
       'transports': ['websocket'],
       'autoConnect': false,
     });
-    socket?.connect();
+    socket!.connect();
   }
+
+  static String get getjn => '';
 
   static SocketClient get instance {
     _instance ??= SocketClient._internal();
