@@ -7,6 +7,8 @@ class RoomDataProvider extends ChangeNotifier {
   final List<String> _displayElements = ['', '', '', '', '', '', '', '', ''];
   int _filledBoxes = 0;
 
+
+
   Player _player1 = Player(
     nickname: '',
     socketID: '',
@@ -20,12 +22,20 @@ class RoomDataProvider extends ChangeNotifier {
     playerType: 'O',
   );
 
+     Player _playerOnCurrentDevice= Player(
+    nickname: '',
+    socketID: '',
+    points: 0,
+    playerType: 'O',
+  );
+
   Map<String, dynamic> get roomData => _roomData;
   List<String> get displayElements => _displayElements;
   int get filledBoxes => _filledBoxes;
 
   Player get player1 => _player1;
   Player get player2 => _player2;
+  Player get playerOnCurrentDevice => _playerOnCurrentDevice;
 
   void updateRoomData(Map<String, dynamic> data) {
     _roomData = data;
@@ -40,6 +50,10 @@ class RoomDataProvider extends ChangeNotifier {
   void updatePlayer2(Map<String, dynamic> player2Data) {
     _player2 = Player.fromMap(player2Data);
     notifyListeners();
+  }
+
+  void updatePlayerOnThisDevice(Player player) {
+    _playerOnCurrentDevice = player;
   }
 
   void updateDisplayElements(int index, String choice) {

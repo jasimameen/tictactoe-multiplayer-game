@@ -32,7 +32,8 @@ class GameMethods {
       if (_roomDataProvider.player1.playerType == winner) {
         Player player1 = _roomDataProvider.player1;
         // Player1 Won
-        showGameDialog('${player1.nickname} WON!');
+        bool condition = player1 == _roomDataProvider.playerOnCurrentDevice;
+        showGameDialog(condition ? "You Win" : 'You Loose');
         SocketClient.emit('winner', {
           'winnerSocketId': player1.socketID,
           'roomId': _roomDataProvider.roomData['_id']
@@ -41,7 +42,8 @@ class GameMethods {
         Player player2 = _roomDataProvider.player2;
 
         // Player2 Won
-        showGameDialog('${player2.nickname} WON!');
+        bool condition = player2 == _roomDataProvider.playerOnCurrentDevice;
+        showGameDialog(condition ? "You Win" : 'You Loose');
         SocketClient.emit('winner', {
           'winnerSocketId': player2.socketID,
           'roomId': _roomDataProvider.roomData['_id']
@@ -65,7 +67,7 @@ class GameMethods {
     showGameDialog('GameOver', actionText: 'Leave Room');
     sleep(const Duration(seconds: 3));
     _roomDataProvider.dispose();
-    
+
     Navigation.popUntil(MainMenuScreen.routeName);
   }
 

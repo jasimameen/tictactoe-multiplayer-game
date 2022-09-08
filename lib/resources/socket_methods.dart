@@ -44,10 +44,13 @@ class SocketMethods {
     _socketClient.on(
       'CreateRoomSuccess',
       (room) {
-        Provider.of<RoomDataProvider>(
+        var roomDataProvider = Provider.of<RoomDataProvider>(
           context,
           listen: false,
-        ).updateRoomData(room);
+        );
+        roomDataProvider.updateRoomData(room);
+        roomDataProvider.updatePlayerOnThisDevice(roomDataProvider.player1);
+
         Navigation.pushNamed(GameScreen.routeName);
       },
     );
@@ -55,10 +58,12 @@ class SocketMethods {
 
   void joinRoomSuccessListener(BuildContext context) {
     _socketClient.on('joinRoomSuccess', (room) {
-      Provider.of<RoomDataProvider>(
+      var roomDataProvider = Provider.of<RoomDataProvider>(
         context,
         listen: false,
-      ).updateRoomData(room);
+      );
+      roomDataProvider.updateRoomData(room);
+      roomDataProvider.updatePlayerOnThisDevice(roomDataProvider.player2);
       Navigation.pushNamed(GameScreen.routeName);
     });
   }
