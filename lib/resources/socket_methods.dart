@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mp_tictactoe/resources/game_methods.dart';
 import '../core/navigation.dart';
 import 'socket_client.dart';
 import '../screens/game_screeen.dart';
@@ -100,8 +101,12 @@ class SocketMethods {
 
       Provider.of<RoomDataProvider>(context, listen: false)
           .updateRoomData(data['room']);
+
+      GameMethods().checkWinner(_socketClient);
     });
   }
+
+  
 
   // dispose socket client
   void dispose() => _socketClient.dispose();
