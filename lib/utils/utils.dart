@@ -8,11 +8,11 @@ void showSnackBar(String msg) {
       .showSnackBar(SnackBar(content: Text(msg)));
 }
 
-void showGameDialog(String text) {
+void showGameDialog(String text, {String? actionText}) {
   showCupertinoDialog(
     barrierDismissible: false,
     context: Navigation.currentStateContext,
-    builder: (context) => AlertDialog(
+    builder: (context) => CupertinoAlertDialog(
       title: Text(text),
       actions: [
         TextButton(
@@ -20,7 +20,7 @@ void showGameDialog(String text) {
             GameMethods().clearBoard();
             Navigation.pop();
           },
-          child: const Text('Play Again'),
+          child: Text(actionText ?? 'Start NextRound'),
         )
       ],
     ),

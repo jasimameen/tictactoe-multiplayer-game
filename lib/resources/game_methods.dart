@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
 import 'package:mp_tictactoe/core/navigation.dart';
 import 'package:mp_tictactoe/models/player.dart';
 import 'package:mp_tictactoe/provider/room_data_providre.dart';
+import 'package:mp_tictactoe/screens/main_menu_screen.dart';
 import 'package:mp_tictactoe/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_io_client/socket_io_client.dart';
@@ -27,17 +29,10 @@ class GameMethods {
             winOrNot(2, 4, 6);
 
     if (winner.isNotEmpty) {
-      print('\n-----------\n\n');
-      print(
-          'player1 ${_roomDataProvider.player1.nickname} ${_roomDataProvider.player1.playerType}');
-      print(
-          'player2 ${_roomDataProvider.player2.nickname} ${_roomDataProvider.player2.playerType}');
-      print('Winner = $winner');
-      print('\n\n----------\n');
       if (_roomDataProvider.player1.playerType == winner) {
         Player player1 = _roomDataProvider.player1;
         // Player1 Won
-        showGameDialog('${player1.nickname} WON');
+        showGameDialog('${player1.nickname} WON!');
         SocketClient.emit('winner', {
           'winnerSocketId': player1.socketID,
           'roomId': _roomDataProvider.roomData['_id']
@@ -46,7 +41,7 @@ class GameMethods {
         Player player2 = _roomDataProvider.player2;
 
         // Player2 Won
-        showGameDialog('${player2.nickname} WON');
+        showGameDialog('${player2.nickname} WON!');
         SocketClient.emit('winner', {
           'winnerSocketId': player2.socketID,
           'roomId': _roomDataProvider.roomData['_id']
@@ -55,7 +50,7 @@ class GameMethods {
     } else if (_roomDataProvider.filledBoxes == 9) {
       winner = '';
       // display Game Dialog Saying Draw
-      showGameDialog('GAME OVER\nIt\'s a DRAW');
+      showGameDialog('It\'s a DRAW');
     }
   }
 
@@ -64,6 +59,14 @@ class GameMethods {
       _roomDataProvider.updateDisplayElements(i, '');
     }
     _roomDataProvider.resetFilledBoxes();
+  }
+
+  void endGame(String winner) {
+    showGameDialog('GameOver', actionText: 'Leave Room');
+    sleep(const Duration(seconds: 3));
+    _roomDataProvider.dispose();
+    
+    Navigation.popUntil(MainMenuScreen.routeName);
   }
 
   // Helpers Funtions

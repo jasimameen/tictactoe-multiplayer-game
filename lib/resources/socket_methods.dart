@@ -106,7 +106,23 @@ class SocketMethods {
     });
   }
 
-  
+  void updatePointListener(BuildContext context) {
+    _socketClient.on('updatePoint', (playerData) {
+      RoomDataProvider roomDataProvider =
+          Provider.of<RoomDataProvider>(context, listen: false);
+      if (playerData['socketID'] == roomDataProvider.player1.socketID) {
+        roomDataProvider.updatePlayer1(playerData);
+      } else {
+        roomDataProvider.updatePlayer2(playerData);
+      }
+    });
+  }
+
+  void endGameListener(BuildContext context) {
+    _socketClient.on('endGame', (playerData) {
+      GameMethods().endGame(playerData['nickname']);
+    });
+  }
 
   // dispose socket client
   void dispose() => _socketClient.dispose();

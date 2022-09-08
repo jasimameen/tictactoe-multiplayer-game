@@ -1,3 +1,4 @@
+const { on } = require('events');
 const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
@@ -100,6 +101,24 @@ io.on('connection', (socket) => {
                 room,
             });
 
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    socket.on('winner', async ({ winnerSocketId, roomId }) => {
+        try {
+            let room = await Room.findById(roomId);
+            let player = room.players.find((player) => player.socketID == winnerSocketId);
+
+            player.points += 10;
+            await room.save();
+
+            if (player.points >= (room.maxRounds * 10)) {
+                io.emit('endGame', player);
+            } else {
+                io.emit('updatePoint', player);
+            }
         } catch (error) {
             console.log(error);
         }

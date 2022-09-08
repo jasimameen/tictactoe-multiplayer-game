@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 /// Widget Used to Change Screens Without passing Build Context
@@ -23,14 +25,20 @@ import 'package:flutter/material.dart';
 /// ```
 class Navigation {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   /// BuildContext of current active State
-  static BuildContext get currentStateContext => navigatorKey.currentState!.context;
+  static BuildContext get currentStateContext =>
+      navigatorKey.currentState!.context;
 
   static Future<T?> pushNamed<T extends Object?>(String routeName,
       {Object? arguments}) {
-    return Navigator.pushNamed(currentStateContext, routeName, arguments: arguments);
+    return Navigator.pushNamed(currentStateContext, routeName,
+        arguments: arguments);
   }
 
   static void pop<T extends Object?>([T? result]) =>
       Navigator.pop(currentStateContext, result);
+
+  static void popUntil(String routeName) =>
+      Navigator.popUntil(currentStateContext, ModalRoute.withName(routeName));
 }
